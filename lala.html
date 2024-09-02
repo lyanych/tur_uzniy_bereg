@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выберите ингредиент</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f3f3f3;
+        }
+
+        #app {
+            text-align: center;
+            display: none;
+        }
+
+        #main-image {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        #tools {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        #items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item {
+            text-align: center;
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        .item img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .item img:hover {
+            transform: scale(1.1);
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        #options-list {
+            display: none;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        #options-list li {
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="items">
+        <div class="item" onclick="selectItem('виноград.png', 'Виноград')">
+            <img src="виноград.png" alt="Виноград">
+            <div class="caption">Виноград</div>
+        </div>
+
+        <div class="item" onclick="selectItem('яблоки.png', 'Яблоки')">
+            <img src="яблоки.png" alt="Яблоки">
+            <div class="caption">Яблоки</div>
+        </div>
+
+        <div class="item" onclick="selectItem('фрукты_ягоды.png', 'Фрукты/Ягоды')">
+            <img src="фрукты_ягоды.png" alt="Фрукты/Ягоды">
+            <div class="caption">Фрукты/Ягоды</div>
+        </div>
+
+        <div class="item" onclick="selectItem('сахарный_тростник.png', 'Сахарный тростник')">
+            <img src="сахарный_тростник.png" alt="Сахарный тростник">
+            <div class="caption">Сахарный тростник</div>
+        </div>
+
+        <div class="item" onclick="selectItem('голубая_агава.png', 'Голубая агава')">
+            <img src="голубая_агава.png" alt="Голубая агава">
+            <div class="caption">Голубая агава</div>
+        </div>
+
+        <div class="item" onclick="selectItem('зерно.png', 'Зерно')">
+            <img src="зерно.png" alt="Зерно">
+            <div class="caption">Зерно</div>
+        </div>
+
+        <div class="item" onclick="selectItem('спирт.png', 'Спирт')">
+            <img src="спирт.png" alt="Спирт">
+            <div class="caption">Спирт</div>
+        </div>
+    </div>
+
+    <div id="app">
+        <img id="main-image" src="" alt="">
+        <div id="caption"></div>
+
+        <div id="tools">
+            <button onclick="showOptions('additives')">Добавки</button>
+            <button onclick="showOptions('processes')">Процессы</button>
+
+            <ul id="options-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        const additives = [
+            'Спирт', 'Растения', 'Сахар', 'Дрожжи', 'Полынь', 'Можжевельник',
+            'Сок', 'Мягкая вода', 'Колер', 'Хмель', 'Сливки'
+        ];
+
+        const processes = [
+            'Мацерация (Настаивание)', 'Фильтрация', 'Дистилляция', 'Ректификация', 'Ферментация (Брожение)', 
+            'Гомогенизация', 'Выдержка', 'Прессование/Отжим сока', 'Запекание', 'Замачивание', 
+            'Проращивание', 'Сушка', 'Варка с хмелем', 'Разваривание под давлением', 
+            'Дробление'
+        ];
+
+        let selectedItem = null;
+        let currentStage = 0;
+
+        function selectItem(imageSrc, captionText) {
+            selectedItem = captionText;
+            currentStage = 0;
+            document.getElementById('items').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            document.getElementById('main-image').src = imageSrc;
+            document.getElementById('caption').textContent = captionText;
+        }
+
+        function showOptions(type) {
+            const optionsList = document.getElementById('options-list');
+            optionsList.innerHTML = '';
+            optionsList.style.display = 'block';
+
+            let options = [];
+
+            if (type === 'additives') {
+                options = additives;
+            } else if (type === 'processes') {
+                options = processes;
+            }
+
+            options.forEach(option => {
+                const li = document.createElement('li');
+                li.textContent = option;
+                li.onclick = () => applyProcess(option);
+                optionsList.appendChild(li);
+            });
+        }
+
+        function applyProcess(process) {
+            if (selectedItem === 'Виноград') {
+                if (process === 'Прессование/Отжим сока' && currentStage === 0) {
+                    document.getElementById('main-image').src = 'виноградный_сок.png';
+                    document.getElementById('caption').textContent = 'Виноградный сок';
+                    currentStage = 1;
+                } else if (process === 'Мацерация (Настаивание)' && currentStage === 1) {
+                    document.getElementById('main-image').src = 'красный_виноградный_сок.png';
+                    document.getElementById('caption').textContent = 'Красный виноградный сок';
+                    currentStage = 2;
+                } else if (process === 'Ферментация (Брожение)') {
+                    if (currentStage === 1) {
+                        document.getElementById('main-image').src = 'белое_вино.png';
+                        document.getElementById('caption').textContent = 'Белое вино';
+                        currentStage = 3;
+                    } else if (currentStage === 2) {
+                        document.getElementById('main-image').src = 'красное_вино.png';
+                        document.getElementById('caption').textContent = 'Красное вино';
+                        currentStage = 3;
+                    }
+                } else {
+                    alert(`Процесс "${process}" не применим к "${selectedItem}" на этом этапе.`);
+                }
+            } else {
+                alert(`Процесс "${process}" применен к "${selectedItem}".`);
+            }
+        }
+    </script>
+</body>
+</html>
