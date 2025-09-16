@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зимние туры</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="package-card winter-card">
+    <h2❄️ Зимняя рыбалка и чаны 🎣🔥</h2>
+    <p class="duration">3 дня / 2 ночи</p>
+
+    <div class="package-details">
+      <ul>
+        <li>✈️ Дорога туда-обратно (маленький самолёт)</li>
+        <li>🏡 Проживание в уютных номерах</li>
+        <li>🌊 Прогулки вдоль моря</li>
+      </ul>
+    </div>
+
+    <div class="extras">
+      <p><b>Дополнительно:</b></p>
+      <ul>
+        <li>🔥 Банные чаны под открытым небом</li>
+        <li>🎣 Рыбалка на озере (свои снасти)</li>
+        <li>🚐 Прокат снастей</li>
+        <li>📸 Фотосессия</li>
+        <li>🍵 Горячие напитки</li>
+      </ul>
+    </div>
+
+    <div class="price-block">
+      <span class="price">от ??? ₽ / чел</span>
+      <button class="btn">Забронировать</button>
+    </div>
+  </div>
+
+
+<div class="date-selection">
+  <label><b>Выберите дату заезда:</b></label>
+  <div class="selects">
+    <select id="winter-month">
+      <option value="12">Декабрь</option>
+      <option value="1">Январь</option>
+      <option value="2">Февраль</option>
+    </select>
+    <select id="winter-day"></select>
+  </div>
+</div>
+
+<script>
+  const winterDay = document.getElementById('winter-day');
+  const winterMonth = document.getElementById('winter-month');
+
+  function fillDaysWinter(month) {
+    winterDay.innerHTML = '';
+    let days = 31;
+    if (month == 2) days = 28;
+    else if (month == 12) days = 31;
+    else if (month == 1) days = 31;
+
+    // Ограничение для зимы: декабрь 1–31, январь 1–31, февраль 1–28
+    for (let i = 1; i <= days; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      winterDay.appendChild(option);
+    }
+  }
+
+  fillDaysWinter(12); // начальный месяц
+
+  winterMonth.addEventListener('change', () => fillDaysWinter(parseInt(winterMonth.value)));
+</script>
+
+</body>
+</html>

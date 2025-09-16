@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Выбор тура</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Выберите сезон для тура</h1>
+  </header>
+
+  <section class="seasons">
+    <div class="season" data-season="winter">Зима</div>
+    <div class="season" data-season="spring">Весна</div>
+    <div class="season" data-season="summer">Лето</div>
+    <div class="season" data-season="autumn">Осень</div>
+  </section>
+
+  <section class="activities">
+    <h2>Доступный досуг:</h2>
+    <ul id="activities-list"></ul>
+  </section>
+
+  <section class="order-form">
+    <h2>Оформить заявку на тур</h2>
+    <form id="tour-form">
+      <label>Выберите даты тура:</label>
+      <input id="tour-dates" type="text" placeholder="Выберите с–по" required>
+
+      <label>ФИО:</label>
+      <input type="text" name="fullname" placeholder="Иванов Иван Иванович" required>
+
+      <label>Телефон:</label>
+      <div class="phone-wrapper">
+        <span class="phone-prefix">+7</span>
+        <input type="tel" id="phone" name="phone" maxlength="10" pattern="\d{10}" placeholder="1234567890" required>
+      </div>
+      <p class="phone-error">Проверьте, пожалуйста, корректность номера телефона</p>
+
+      <button type="submit">ОТПРАВИТЬ ЗАЯВКУ</button>
+    </form>
+  </section>
+
+  <script>
+    // Досуг по сезонам
+    const activitiesData = {
+      winter: [
+        "❄️ Лыжи",
+        "🎣 Зимняя рыбалка",
+        "🔥 Банные чаны",
+        "☕ Горячие напитки"
+      ],
+      spring: [
+        "🌱 Прогулки на природе",
+        "🎣 Рыбалка на озере",
+        "📸 Фотосессии",
+        "🚴‍♂️ Велопрогулки"
+      ],
+      summer: [
+        "☀️ Пляжные развлечения",
+        "🏄 Водные виды спорта",
+        "🎣 Рыбалка на озере",
+        "🍹 Летние напитки"
+      ],
+      autumn: [
+        "🍂 Прогулки в лесу",
+        "🎣 Рыбалка",
+        "🔥 Банные чаны",
+        "📸 Фотосессии"
+      ]
+    };
+
+    const seasonElements = document.querySelectorAll(".season");
+    const activitiesList = document.getElementById("activities-list");
+
+    seasonElements.forEach(el => {
+      el.addEventListener("click", () => {
+        const season = el.dataset.season;
+        activitiesList.innerHTML = "";
+        activitiesData[season].forEach(act => {
+          const li = document.createElement("li");
+          li.textContent = act;
+          activitiesList.appendChild(li);
+        });
+      });
+    });
+
+    // Flatpickr календарь
+    flatpickr("#tour-dates", {
+      mode: "range",
+      dateFormat: "d.m.Y",
+      minDate: "today"
+    });
+
+    // Проверка телефона
+    const phoneInput = document.getElementById("phone");
+    const form = document.getElementById("tour-form");
+    const phoneError = document.querySelector(".phone-error");
+    phoneError.style.display = "none";
+
+    form.addEventListener("submit", e => {
+      if (!/^\d{10}$/.test(phoneInput.value)) {
+        e.preventDefault();
+        phoneError.style.display = "block";
+      } else {
+        phoneError.style.display = "none";
+        alert("Заявка отправлена!");
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
