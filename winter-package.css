@@ -1,0 +1,71 @@
+.package-card {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f0f8ff, #ffffff);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  font-family: "Segoe UI", sans-serif;
+  color: #333;
+}
+
+.package-card h2 {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.package-card .duration {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.package-details ul, 
+.extras ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.package-details li,
+.extras li {
+  margin: 8px 0;
+  padding-left: 5px;
+  font-size: 1rem;
+}
+
+.extras {
+  margin-top: 15px;
+  background: #f9f9f9;
+  padding: 10px 15px;
+  border-radius: 12px;
+}
+
+.price-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.price-block .price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #1e88e5;
+}
+
+.btn {
+  padding: 10px 18px;
+  background: #1e88e5;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #1565c0;
+}
